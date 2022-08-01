@@ -192,16 +192,19 @@ func (std *LinkedList) Reverse() {
 		return
 	}
 
-	var curr *LinkedNode = std.Head
-	var prev *LinkedNode = nil
-	var next *LinkedNode = nil
+	var tempHead = &LinkedNode{}
+	tempHead.Next = std.Head
 
-	for curr != nil {
-		next = curr.Next
-		curr.Next = prev
-		prev = curr
-		curr = next
+	var leftEnd = tempHead
+
+	var ptToStart = leftEnd.Next
+
+	for ptToStart.Next != nil {
+		var ptToCut = ptToStart.Next
+		ptToStart.Next = ptToCut.Next
+		ptToCut.Next = leftEnd.Next
+		leftEnd.Next = ptToCut
 	}
 
-	std.Head = prev
+	std.Head = tempHead.Next
 }

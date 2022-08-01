@@ -16,53 +16,46 @@ func main() {
 	list.Insert(4)
 	list.Insert(5)
 	list.Insert(6)
+	list.Insert(7)
 
-	result := reverseBetween(list.Head, 3, 5)
+	iter := reverseBetween(list.Head, 3, 5)
 
-	fmt.Println(result.Val)
+	for iter != nil {
+		fmt.Println(iter.Val)
+
+		iter = iter.Next
+	}
 }
 
-/**
- * Definition for singly-linked list.
- * type Node struct {
- *     Val int
- *     Next *Node
- * }
- */
-func reverseBetween(head *data_structures.Node, left int, right int) *data_structures.Node {
-	if head == nil {
-		return nil
+func reverseBetween(head *data_structures.LinkedNode, left int, right int) *data_structures.LinkedNode {
+	if head == nil || left == right {
+		return head
 	}
 
-	var curr *data_structures.Node = head
-	var prev *data_structures.Node
-	var next *data_structures.Node
+	var tempHead = &data_structures.LinkedNode{}
+	tempHead.Next = head
 
-	for curr.Next != nil {
-		fmt.Println(curr.Val)
-		fmt.Println(prev)
-		fmt.Println(next)
+	var leftEnd = tempHead
 
-		curr = curr.Next
+	var pos = 1
+	for pos < left {
+		leftEnd = leftEnd.Next
+		pos++
 	}
 
-	return curr
-}
+	var ptToStart = leftEnd.Next
 
-func reverse() {
-	// // Initialize current, previous and next pointers
-	// Node* current = head;
-	// Node* prev = NULL, *next = NULL;
+	//       |     |
+	// 1, 2, 3, 4, 5, 6, 7
+	for left < right {
 
-	// while (current != NULL) {
-	// 	// Store next
-	// 	next = current->next;
-	// 	// Reverse current node's pointer
-	// 	current->next = prev;
-	// 	// Move pointers one position ahead.
-	// 	prev = current;
-	// 	current = next;
-	// }
+		var ptToCut = ptToStart.Next
+		ptToStart.Next = ptToCut.Next
+		ptToCut.Next = leftEnd.Next
+		leftEnd.Next = ptToCut
 
-	// head = prev;
+		left++
+	}
+
+	return tempHead.Next
 }

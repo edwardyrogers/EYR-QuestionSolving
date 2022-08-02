@@ -27,12 +27,12 @@ func main() {
 	}
 }
 
-func reverseBetween(head *data_structures.LinkedNode, left int, right int) *data_structures.LinkedNode {
+func reverseBetween(head *data_structures.LinkNode, left int, right int) *data_structures.LinkNode {
 	if head == nil || left == right {
 		return head
 	}
 
-	var tempHead = &data_structures.LinkedNode{}
+	var tempHead = &data_structures.LinkNode{}
 	tempHead.Next = head
 
 	var leftEnd = tempHead

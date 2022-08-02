@@ -1,23 +1,23 @@
 package data_structures
 
-type LinkedNode struct {
+type LinkNode struct {
 	Val  interface{}
-	Next *LinkedNode
+	Next *LinkNode
 }
 
 type LinkedList struct {
-	Head *LinkedNode
+	Head *LinkNode
 }
 
 func (std *LinkedList) Insert(val interface{}) {
 	if std.Head == nil {
-		std.Head = &LinkedNode{val, nil}
+		std.Head = &LinkNode{val, nil}
 
 		return
 	}
 
 	if std.Head.Next == nil {
-		std.Head.Next = &LinkedNode{val, nil}
+		std.Head.Next = &LinkNode{val, nil}
 
 		return
 	}
@@ -28,7 +28,7 @@ func (std *LinkedList) Insert(val interface{}) {
 		next = next.Next
 	}
 
-	next.Next = &LinkedNode{val, nil}
+	next.Next = &LinkNode{val, nil}
 }
 
 func (std *LinkedList) Retrieve(val interface{}) interface{} {
@@ -192,10 +192,10 @@ func (std *LinkedList) Reverse() {
 		return
 	}
 
-	var tempHead = &LinkedNode{}
-	tempHead.Next = std.Head
+	var reaultHead = &LinkNode{}
+	reaultHead.Next = std.Head
 
-	var leftEnd = tempHead
+	var leftEnd = reaultHead
 
 	var ptToStart = leftEnd.Next
 
@@ -206,5 +206,5 @@ func (std *LinkedList) Reverse() {
 		leftEnd.Next = ptToCut
 	}
 
-	std.Head = tempHead.Next
+	std.Head = reaultHead.Next
 }

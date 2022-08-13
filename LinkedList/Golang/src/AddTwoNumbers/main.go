@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"golang/pkg/data_structures"
+	"strconv"
 )
 
 func main() {
@@ -28,27 +29,26 @@ func main() {
 }
 
 func addTwoNumbers(l1 *data_structures.LinkNode, l2 *data_structures.LinkNode) *data_structures.LinkNode {
-	var carry = 0
+	var carry uint64 = 0
 	var result = &data_structures.LinkNode{}
 	var pointer = result
 
 	for l1 != nil || l2 != nil || carry > 0 {
 
-		var first_num int
+		var firstNum uint64 = 0
+
 		if l1 != nil {
-			first_num = int(l1.Val.(int))
-		} else {
-			first_num = 0
+			firstNumStr := fmt.Sprint(l1.Val)
+			firstNum, _ = strconv.ParseUint(firstNumStr, 0, 10)
 		}
 
-		var second_num int
+		var secondNum uint64 = 0
 		if l2 != nil {
-			second_num = int(l2.Val.(int))
-		} else {
-			second_num = 0
+			secondNumStr := fmt.Sprint(l2.Val)
+			secondNum, _ = strconv.ParseUint(secondNumStr, 0, 10)
 		}
 
-		var sum = first_num + second_num + carry
+		var sum = firstNum + secondNum + carry
 		var num = sum % 10
 		carry = sum / 10
 

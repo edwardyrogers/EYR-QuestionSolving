@@ -1,4 +1,4 @@
-package data_structures
+package ds
 
 type LinkNode struct {
 	Val  interface{}

@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 
-	"eyr.question.solving/pkg/data_structures"
+	ds "eyr.question.solving/pkg/ds"
 )
 
 func main() {
 	// https://leetcode.com/problems/reverse-linked-list-ii/
 
-	list := data_structures.LinkedList{}
+	list := ds.LinkedList{}
 
 	list.Insert(1)
 	list.Insert(2)
@@ -28,12 +28,12 @@ func main() {
 	}
 }
 
-func reverseBetween(head *data_structures.LinkNode, left int, right int) *data_structures.LinkNode {
+func reverseBetween(head *ds.LinkNode, left int, right int) *ds.LinkNode {
 	if head == nil || left == right {
 		return head
 	}
 
-	var tempHead = &data_structures.LinkNode{}
+	var tempHead = &ds.LinkNode{}
 	tempHead.Next = head
 
 	var leftEnd = tempHead

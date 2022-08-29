@@ -4,18 +4,18 @@ import (
 	"fmt"
 	"strconv"
 
-	"eyr.question.solving/pkg/data_structures"
+	ds "eyr.question.solving/pkg/ds"
 )
 
 func main() {
 	// https://leetcode.com/problems/merge-two-sorted-lists/
 
-	listOne := data_structures.LinkedList{}
+	listOne := ds.LinkedList{}
 	listOne.Insert(1)
 	listOne.Insert(3)
 	listOne.Insert(5)
 
-	listTwo := data_structures.LinkedList{}
+	listTwo := ds.LinkedList{}
 	listTwo.Insert(2)
 	listTwo.Insert(4)
 	listTwo.Insert(6)
@@ -29,9 +29,9 @@ func main() {
 	}
 }
 
-func mergeTwoLists(list1 *data_structures.LinkNode, list2 *data_structures.LinkNode) *data_structures.LinkNode {
+func mergeTwoLists(list1 *ds.LinkNode, list2 *ds.LinkNode) *ds.LinkNode {
 
-	var result = &data_structures.LinkNode{Val: 0, Next: nil}
+	var result = &ds.LinkNode{Val: 0, Next: nil}
 	var pointer = result
 
 	for list1 != nil && list2 != nil {

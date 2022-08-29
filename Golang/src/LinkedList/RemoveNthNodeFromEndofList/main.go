@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 
-	"eyr.question.solving/pkg/data_structures"
+	ds "eyr.question.solving/pkg/ds"
 )
 
 func main() {
 	// https://leetcode.com/problems/remove-nth-node-from-end-of-list/
 
-	list := data_structures.LinkedList{}
+	list := ds.LinkedList{}
 	list.Insert(1)
 	list.Insert(2)
 	list.Insert(3)
@@ -26,12 +26,12 @@ func main() {
 	}
 }
 
-func removeNthFromEnd(head *data_structures.LinkNode, n int) *data_structures.LinkNode {
+func removeNthFromEnd(head *ds.LinkNode, n int) *ds.LinkNode {
 	if n < 1 {
 		return head
 	}
 
-	var result = &data_structures.LinkNode{Val: nil, Next: head}
+	var result = &ds.LinkNode{Val: nil, Next: head}
 	var quickNode = result
 	var slowNode = result
 

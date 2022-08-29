@@ -4,18 +4,18 @@ import (
 	"fmt"
 	"strconv"
 
-	"eyr.question.solving/pkg/data_structures"
+	"eyr.question.solving/pkg/ds"
 )
 
 func main() {
 	// https://leetcode.com/problems/add-two-numbers/
 
-	listOne := data_structures.LinkedList{}
+	listOne := ds.LinkedList{}
 	listOne.Insert(7)
 	listOne.Insert(8)
 	listOne.Insert(9)
 
-	listTwo := data_structures.LinkedList{}
+	listTwo := ds.LinkedList{}
 	listTwo.Insert(6)
 	listTwo.Insert(5)
 	listTwo.Insert(4)
@@ -29,9 +29,9 @@ func main() {
 	}
 }
 
-func addTwoNumbers(l1 *data_structures.LinkNode, l2 *data_structures.LinkNode) *data_structures.LinkNode {
+func addTwoNumbers(l1 *ds.LinkNode, l2 *ds.LinkNode) *ds.LinkNode {
 	var carry uint64 = 0
-	var result = &data_structures.LinkNode{}
+	var result = &ds.LinkNode{}
 	var pointer = result
 
 	for l1 != nil || l2 != nil || carry > 0 {
@@ -53,7 +53,7 @@ func addTwoNumbers(l1 *data_structures.LinkNode, l2 *data_structures.LinkNode) *
 		var num = sum % 10
 		carry = sum / 10
 
-		pointer.Next = &data_structures.LinkNode{Val: num, Next: nil}
+		pointer.Next = &ds.LinkNode{Val: num, Next: nil}
 		pointer = pointer.Next
 
 		if l1 != nil {

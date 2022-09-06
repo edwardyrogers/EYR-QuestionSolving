@@ -1,3 +1,3 @@
 module eyr.question.solving
 
-go 1.18
+go 1.19

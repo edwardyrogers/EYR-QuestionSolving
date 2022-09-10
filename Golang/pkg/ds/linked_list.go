@@ -14,181 +14,135 @@ type LinkedList[T dt.Comparable] struct {
 }
 
 func (std *LinkedList[T]) Insert(val T) {
-	if std.Head == nil {
-		std.Head = &LinkNode[T]{&val, nil}
+	origin := &LinkNode[T]{}
+	origin.Next = std.Head
 
-		return
+	pointer := origin
+
+	for pointer.Next != nil {
+		pointer = pointer.Next
 	}
 
-	if std.Head.Next == nil {
-		std.Head.Next = &LinkNode[T]{&val, nil}
+	pointer.Next = &LinkNode[T]{&val, nil}
 
-		return
-	}
-
-	next := std.Head.Next
-
-	for next.Next != nil {
-		next = next.Next
-	}
-
-	next.Next = &LinkNode[T]{&val, nil}
+	std.Head = origin.Next
 }
 
-func (std *LinkedList[T]) Retrieve(val T) map[string]T {
-	var resultSet map[string]T
+func (std *LinkedList[T]) Retrieve(val int) *LinkNode[T] {
+	origin := &LinkNode[T]{}
+	origin.Next = std.Head
 
-	if std.Head != nil {
-		index := 0
+	pointer := origin.Next
 
-		if std.Head.Val == &val {
-			resultSet = map[string]T{
-				"idx": T(rune(index)),
-				"val": *std.Head.Val,
-			}
+	pos := 0
+
+	for pointer != nil {
+
+		if pos == val {
+			break
 		}
 
-		if resultSet == nil {
-			next := std.Head.Next
-
-			for next != nil {
-				index++
-
-				if next.Val == &val {
-					resultSet = map[string]T{
-						"idx": T(rune(index)),
-						"val": *next.Val,
-					}
-				}
-
-				next = next.Next
-			}
-		}
+		pointer = pointer.Next
+		pos++
 	}
 
-	return resultSet
+	return pointer
 }
 
-func (std *LinkedList[T]) FilterByVal(val T) []map[string]T {
-	var resultSet []map[string]T
+func (std *LinkedList[T]) FilterByVal(val T) []LinkNode[T] {
+	result := []LinkNode[T]{}
 
-	if std.Head != nil {
-		index := 0
+	origin := &LinkNode[T]{}
+	origin.Next = std.Head
 
-		if std.Head.Val == &val {
-			resultSet = append(resultSet, map[string]T{
-				"idx": T(rune(index)),
-				"val": *std.Head.Val,
-			})
+	pointer := origin.Next
+
+	for pointer != nil {
+
+		if *pointer.Val == val {
+			result = append(result, *pointer)
 		}
 
-		next := std.Head.Next
-
-		for next != nil {
-			index++
-
-			if next.Val == &val {
-				resultSet = append(resultSet, map[string]T{
-					"idx": T(rune(index)),
-					"val": *next.Val,
-				})
-			}
-
-			next = next.Next
-		}
-
-	}
-
-	return resultSet
-}
-
-func (std *LinkedList[T]) Update(oldVal T, newVal T) bool {
-	result := false
-
-	if std.Head != nil {
-
-		if std.Head.Val == &oldVal {
-			std.Head.Val = &newVal
-
-			result = std.Head.Val == &newVal
-		}
-
-		if !result {
-			next := std.Head.Next
-
-			for next != nil {
-				if next.Val == &oldVal {
-					next.Val = &newVal
-
-					result = next.Val == &newVal
-					break
-				}
-
-				next = next.Next
-			}
-		}
-
+		pointer = pointer.Next
 	}
 
 	return result
 }
 
-func (std *LinkedList[T]) Delete(val T) bool {
+func (std *LinkedList[T]) Update(idx int, newVal T) bool {
 	result := false
 
-	if std.Head != nil {
+	origin := &LinkNode[T]{}
+	origin.Next = std.Head
 
-		if std.Head.Val == &val {
-			if std.Head.Next != nil {
-				std.Head = std.Head.Next
-			} else {
-				std.Head = nil
-			}
+	pointer := origin.Next
+
+	pos := 0
+
+	for pointer != nil {
+
+		if pos == idx {
+			pointer.Val = &newVal
+
+			result = *pointer.Val == newVal
+
+			break
+		}
+
+		pointer = pointer.Next
+		pos++
+	}
+
+	std.Head = origin.Next
+
+	return result
+}
+
+func (std *LinkedList[T]) Delete(idx int) bool {
+	result := false
+
+	origin := &LinkNode[T]{}
+	origin.Next = std.Head
+
+	previous := origin
+	pointer := origin.Next
+
+	pos := 0
+
+	for pointer != nil {
+
+		if pos == idx {
+			previous.Next = pointer.Next
+			pointer = previous.Next
 
 			result = true
+			break
 		}
 
-		if !result {
-			prev := std.Head
-			next := std.Head.Next
-
-			for next != nil {
-
-				if next.Val == &val {
-					if next.Next != nil {
-						prev.Next = next.Next
-					} else {
-						prev.Next = nil
-					}
-
-					result = true
-					break
-				}
-
-				prev = next
-				next = next.Next
-			}
-		}
+		previous = pointer
+		pointer = pointer.Next
+		pos++
 	}
+
+	std.Head = origin.Next
 
 	return result
 }
 
 func (std *LinkedList[T]) Size() int {
-	var count []T
+	result := 0
 
-	if std.Head != nil {
-		count = append(count, *std.Head.Val)
+	origin := &LinkNode[T]{}
+	origin.Next = std.Head
 
-		next := std.Head.Next
+	pointer := origin.Next
 
-		for next != nil {
-			count = append(count, *std.Head.Val)
-			next = next.Next
-		}
+	for pointer != nil {
+		pointer = pointer.Next
+		result++
 	}
 
-	return len(count)
+	return result
 }
 
 func (std *LinkedList[T]) Reverse() {
@@ -196,10 +150,10 @@ func (std *LinkedList[T]) Reverse() {
 		return
 	}
 
-	var reaultHead = &LinkNode[T]{}
-	reaultHead.Next = std.Head
+	var origin = &LinkNode[T]{}
+	origin.Next = std.Head
 
-	var leftEnd = reaultHead
+	var leftEnd = origin
 
 	var ptToStart = leftEnd.Next
 
@@ -210,5 +164,5 @@ func (std *LinkedList[T]) Reverse() {
 		leftEnd.Next = ptToCut
 	}
 
-	std.Head = reaultHead.Next
+	std.Head = origin.Next
 }

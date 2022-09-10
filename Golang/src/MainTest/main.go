@@ -17,6 +17,18 @@ func main() {
 	linked_list.Insert(8)
 	linked_list.Insert(9)
 
+	// fmt.Println(*linked_list.Retrieve(2).Val)
+
+	// fmt.Println(linked_list.Update(0, 9))
+	// fmt.Println(linked_list.Delete(1))
+	// fmt.Println(linked_list.Size())
+
+	// for _, element := range linked_list.FilterByVal(9) {
+	// 	fmt.Println(*element.Val)
+	// }
+
+	// linked_list.Reverse()
+
 	iter := linked_list.Head
 
 	for iter != nil {

@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 
-	ds "eyr.question.solving/pkg/ds"
+	"eyr.question.solving/pkg/ds"
+	"eyr.question.solving/pkg/dt"
 )
 
 func main() {
 	// https://leetcode.com/problems/remove-nth-node-from-end-of-list/
 
-	list := ds.LinkedList{}
+	list := ds.LinkedList[int]{}
 	list.Insert(1)
 	list.Insert(2)
 	list.Insert(3)
@@ -19,21 +20,21 @@ func main() {
 	iter := removeNthFromEnd(list.Head, 2)
 
 	for iter != nil {
-		fmt.Println(iter.Val)
-		// fmt.Println("")
+		fmt.Println(*iter.Val)
 
 		iter = iter.Next
 	}
 }
 
-func removeNthFromEnd(head *ds.LinkNode, n int) *ds.LinkNode {
+func removeNthFromEnd[T dt.Comparable](head *ds.LinkNode[T], n int) *ds.LinkNode[T] {
 	if n < 1 {
 		return head
 	}
 
-	var result = &ds.LinkNode{Val: nil, Next: head}
-	var quickNode = result
-	var slowNode = result
+	result := &ds.LinkNode[T]{Val: nil, Next: head}
+
+	quickNode := result
+	slowNode := result
 
 	for idx := 1; idx <= n; idx++ {
 		quickNode = quickNode.Next

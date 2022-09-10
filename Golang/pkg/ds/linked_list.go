@@ -1,23 +1,27 @@
 package ds
 
-type LinkNode struct {
-	Val  interface{}
-	Next *LinkNode
+import (
+	"eyr.question.solving/pkg/dt"
+)
+
+type LinkNode[T dt.Comparable] struct {
+	Val  *T
+	Next *LinkNode[T]
 }
 
-type LinkedList struct {
-	Head *LinkNode
+type LinkedList[T dt.Comparable] struct {
+	Head *LinkNode[T]
 }
 
-func (std *LinkedList) Insert(val interface{}) {
+func (std *LinkedList[T]) Insert(val T) {
 	if std.Head == nil {
-		std.Head = &LinkNode{val, nil}
+		std.Head = &LinkNode[T]{&val, nil}
 
 		return
 	}
 
 	if std.Head.Next == nil {
-		std.Head.Next = &LinkNode{val, nil}
+		std.Head.Next = &LinkNode[T]{&val, nil}
 
 		return
 	}
@@ -28,19 +32,19 @@ func (std *LinkedList) Insert(val interface{}) {
 		next = next.Next
 	}
 
-	next.Next = &LinkNode{val, nil}
+	next.Next = &LinkNode[T]{&val, nil}
 }
 
-func (std *LinkedList) Retrieve(val interface{}) interface{} {
-	var resultSet map[string]interface{}
+func (std *LinkedList[T]) Retrieve(val T) map[string]T {
+	var resultSet map[string]T
 
 	if std.Head != nil {
 		index := 0
 
-		if std.Head.Val == val {
-			resultSet = map[string]interface{}{
-				"idx": index,
-				"val": std.Head.Val,
+		if std.Head.Val == &val {
+			resultSet = map[string]T{
+				"idx": T(rune(index)),
+				"val": *std.Head.Val,
 			}
 		}
 
@@ -50,10 +54,10 @@ func (std *LinkedList) Retrieve(val interface{}) interface{} {
 			for next != nil {
 				index++
 
-				if next.Val == val {
-					resultSet = map[string]interface{}{
-						"idx": index,
-						"val": next.Val,
+				if next.Val == &val {
+					resultSet = map[string]T{
+						"idx": T(rune(index)),
+						"val": *next.Val,
 					}
 				}
 
@@ -65,16 +69,16 @@ func (std *LinkedList) Retrieve(val interface{}) interface{} {
 	return resultSet
 }
 
-func (std *LinkedList) FilterByVal(val interface{}) interface{} {
-	var resultSet []interface{}
+func (std *LinkedList[T]) FilterByVal(val T) []map[string]T {
+	var resultSet []map[string]T
 
 	if std.Head != nil {
 		index := 0
 
-		if std.Head.Val == val {
-			resultSet = append(resultSet, map[string]interface{}{
-				"idx": index,
-				"val": std.Head.Val,
+		if std.Head.Val == &val {
+			resultSet = append(resultSet, map[string]T{
+				"idx": T(rune(index)),
+				"val": *std.Head.Val,
 			})
 		}
 
@@ -83,10 +87,10 @@ func (std *LinkedList) FilterByVal(val interface{}) interface{} {
 		for next != nil {
 			index++
 
-			if next.Val == val {
-				resultSet = append(resultSet, map[string]interface{}{
-					"idx": index,
-					"val": next.Val,
+			if next.Val == &val {
+				resultSet = append(resultSet, map[string]T{
+					"idx": T(rune(index)),
+					"val": *next.Val,
 				})
 			}
 
@@ -98,25 +102,25 @@ func (std *LinkedList) FilterByVal(val interface{}) interface{} {
 	return resultSet
 }
 
-func (std *LinkedList) Update(oldVal interface{}, newVal interface{}) bool {
+func (std *LinkedList[T]) Update(oldVal T, newVal T) bool {
 	result := false
 
 	if std.Head != nil {
 
-		if std.Head.Val == oldVal {
-			std.Head.Val = newVal
+		if std.Head.Val == &oldVal {
+			std.Head.Val = &newVal
 
-			result = std.Head.Val == newVal
+			result = std.Head.Val == &newVal
 		}
 
 		if !result {
 			next := std.Head.Next
 
 			for next != nil {
-				if next.Val == oldVal {
-					next.Val = newVal
+				if next.Val == &oldVal {
+					next.Val = &newVal
 
-					result = next.Val == newVal
+					result = next.Val == &newVal
 					break
 				}
 
@@ -129,12 +133,12 @@ func (std *LinkedList) Update(oldVal interface{}, newVal interface{}) bool {
 	return result
 }
 
-func (std *LinkedList) Delete(val interface{}) bool {
+func (std *LinkedList[T]) Delete(val T) bool {
 	result := false
 
 	if std.Head != nil {
 
-		if std.Head.Val == val {
+		if std.Head.Val == &val {
 			if std.Head.Next != nil {
 				std.Head = std.Head.Next
 			} else {
@@ -150,7 +154,7 @@ func (std *LinkedList) Delete(val interface{}) bool {
 
 			for next != nil {
 
-				if next.Val == val {
+				if next.Val == &val {
 					if next.Next != nil {
 						prev.Next = next.Next
 					} else {
@@ -170,16 +174,16 @@ func (std *LinkedList) Delete(val interface{}) bool {
 	return result
 }
 
-func (std *LinkedList) Size() int {
-	var count []interface{}
+func (std *LinkedList[T]) Size() int {
+	var count []T
 
 	if std.Head != nil {
-		count = append(count, std.Head)
+		count = append(count, *std.Head.Val)
 
 		next := std.Head.Next
 
 		for next != nil {
-			count = append(count, std.Head.Val)
+			count = append(count, *std.Head.Val)
 			next = next.Next
 		}
 	}
@@ -187,12 +191,12 @@ func (std *LinkedList) Size() int {
 	return len(count)
 }
 
-func (std *LinkedList) Reverse() {
+func (std *LinkedList[T]) Reverse() {
 	if std.Head == nil {
 		return
 	}
 
-	var reaultHead = &LinkNode{}
+	var reaultHead = &LinkNode[T]{}
 	reaultHead.Next = std.Head
 
 	var leftEnd = reaultHead

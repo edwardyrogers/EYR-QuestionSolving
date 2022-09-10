@@ -2,58 +2,55 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 
 	"eyr.question.solving/pkg/ds"
+	"eyr.question.solving/pkg/dt"
 )
 
 func main() {
 	// https://leetcode.com/problems/add-two-numbers/
 
-	listOne := ds.LinkedList{}
-	listOne.Insert(7)
-	listOne.Insert(8)
-	listOne.Insert(9)
+	listOne := ds.LinkedList[uint64]{}
+	listOne.Insert(2)
+	listOne.Insert(0)
+	listOne.Insert(0)
 
-	listTwo := ds.LinkedList{}
-	listTwo.Insert(6)
-	listTwo.Insert(5)
-	listTwo.Insert(4)
+	listTwo := ds.LinkedList[uint64]{}
+	listTwo.Insert(3)
+	listTwo.Insert(0)
+	listTwo.Insert(0)
 
 	iter := addTwoNumbers(listOne.Head, listTwo.Head)
 
 	for iter != nil {
-		fmt.Println(iter.Val)
+		fmt.Println(*iter.Val)
 
 		iter = iter.Next
 	}
 }
 
-func addTwoNumbers(l1 *ds.LinkNode, l2 *ds.LinkNode) *ds.LinkNode {
-	var carry uint64 = 0
-	var result = &ds.LinkNode{}
+func addTwoNumbers[T dt.Unsigned](l1 *ds.LinkNode[T], l2 *ds.LinkNode[T]) *ds.LinkNode[T] {
+	var carry T = 0
+	var result = &ds.LinkNode[T]{}
 	var pointer = result
 
 	for l1 != nil || l2 != nil || carry > 0 {
 
-		var firstNum uint64 = 0
-
+		var firstNum T = 0
 		if l1 != nil {
-			firstNumStr := fmt.Sprint(l1.Val)
-			firstNum, _ = strconv.ParseUint(firstNumStr, 0, 10)
+			firstNum = *l1.Val
 		}
 
-		var secondNum uint64 = 0
+		var secondNum T = 0
 		if l2 != nil {
-			secondNumStr := fmt.Sprint(l2.Val)
-			secondNum, _ = strconv.ParseUint(secondNumStr, 0, 10)
+			secondNum = *l2.Val
 		}
 
-		var sum = firstNum + secondNum + carry
-		var num = sum % 10
+		sum := firstNum + secondNum + carry
+		num := sum % 10
 		carry = sum / 10
 
-		pointer.Next = &ds.LinkNode{Val: num, Next: nil}
+		pointer.Next = &ds.LinkNode[T]{Val: &num, Next: nil}
 		pointer = pointer.Next
 
 		if l1 != nil {

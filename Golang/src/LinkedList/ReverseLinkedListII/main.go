@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 
-	ds "eyr.question.solving/pkg/ds"
+	"eyr.question.solving/pkg/ds"
+	"eyr.question.solving/pkg/dt"
 )
 
 func main() {
 	// https://leetcode.com/problems/reverse-linked-list-ii/
 
-	list := ds.LinkedList{}
+	list := ds.LinkedList[int]{}
 
 	list.Insert(1)
 	list.Insert(2)
@@ -22,35 +23,35 @@ func main() {
 	iter := reverseBetween(list.Head, 3, 5)
 
 	for iter != nil {
-		fmt.Println(iter.Val)
+		fmt.Println(*iter.Val)
 
 		iter = iter.Next
 	}
 }
 
-func reverseBetween(head *ds.LinkNode, left int, right int) *ds.LinkNode {
+func reverseBetween[T dt.Comparable](head *ds.LinkNode[T], left int, right int) *ds.LinkNode[T] {
 	if head == nil || left == right {
 		return head
 	}
 
-	var tempHead = &ds.LinkNode{}
-	tempHead.Next = head
+	result := &ds.LinkNode[T]{}
+	result.Next = head
 
-	var leftEnd = tempHead
+	leftEnd := result
 
-	var pos = 1
+	pos := 1
 	for pos < left {
 		leftEnd = leftEnd.Next
 		pos++
 	}
 
-	var ptToStart = leftEnd.Next
+	ptToStart := leftEnd.Next
 
 	//       |     |
 	// 1, 2, 3, 4, 5, 6, 7
 	for left < right {
 
-		var ptToCut = ptToStart.Next
+		ptToCut := ptToStart.Next
 		ptToStart.Next = ptToCut.Next
 		ptToCut.Next = leftEnd.Next
 		leftEnd.Next = ptToCut
@@ -58,5 +59,5 @@ func reverseBetween(head *ds.LinkNode, left int, right int) *ds.LinkNode {
 		left++
 	}
 
-	return tempHead.Next
+	return result.Next
 }

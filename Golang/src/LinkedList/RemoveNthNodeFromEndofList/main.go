@@ -26,12 +26,12 @@ func main() {
 	}
 }
 
-func removeNthFromEnd[T dt.Comparable](head *ds.LinkNode[T], n int) *ds.LinkNode[T] {
+func removeNthFromEnd[T dt.Comparable](head *ds.LinkedNode[T], n int) *ds.LinkedNode[T] {
 	if n < 1 {
 		return head
 	}
 
-	result := &ds.LinkNode[T]{Val: nil, Next: head}
+	result := &ds.LinkedNode[T]{Val: nil, Next: head}
 
 	quickNode := result
 	slowNode := result

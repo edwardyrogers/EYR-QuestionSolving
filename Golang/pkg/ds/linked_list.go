@@ -4,17 +4,17 @@ import (
 	"eyr.question.solving/pkg/dt"
 )
 
-type LinkNode[T dt.Comparable] struct {
+type LinkedNode[T dt.Comparable] struct {
 	Val  *T
-	Next *LinkNode[T]
+	Next *LinkedNode[T]
 }
 
 type LinkedList[T dt.Comparable] struct {
-	Head *LinkNode[T]
+	Head *LinkedNode[T]
 }
 
 func (std *LinkedList[T]) Insert(val T) {
-	origin := &LinkNode[T]{}
+	origin := &LinkedNode[T]{}
 	origin.Next = std.Head
 
 	pointer := origin
@@ -23,13 +23,13 @@ func (std *LinkedList[T]) Insert(val T) {
 		pointer = pointer.Next
 	}
 
-	pointer.Next = &LinkNode[T]{&val, nil}
+	pointer.Next = &LinkedNode[T]{&val, nil}
 
 	std.Head = origin.Next
 }
 
-func (std *LinkedList[T]) Retrieve(val int) *LinkNode[T] {
-	origin := &LinkNode[T]{}
+func (std *LinkedList[T]) Retrieve(val int) *LinkedNode[T] {
+	origin := &LinkedNode[T]{}
 	origin.Next = std.Head
 
 	pointer := origin.Next
@@ -49,10 +49,10 @@ func (std *LinkedList[T]) Retrieve(val int) *LinkNode[T] {
 	return pointer
 }
 
-func (std *LinkedList[T]) FilterByVal(val T) []LinkNode[T] {
-	result := []LinkNode[T]{}
+func (std *LinkedList[T]) FilterByVal(val T) []LinkedNode[T] {
+	result := []LinkedNode[T]{}
 
-	origin := &LinkNode[T]{}
+	origin := &LinkedNode[T]{}
 	origin.Next = std.Head
 
 	pointer := origin.Next
@@ -72,7 +72,7 @@ func (std *LinkedList[T]) FilterByVal(val T) []LinkNode[T] {
 func (std *LinkedList[T]) Update(idx int, newVal T) bool {
 	result := false
 
-	origin := &LinkNode[T]{}
+	origin := &LinkedNode[T]{}
 	origin.Next = std.Head
 
 	pointer := origin.Next
@@ -101,7 +101,7 @@ func (std *LinkedList[T]) Update(idx int, newVal T) bool {
 func (std *LinkedList[T]) Delete(idx int) bool {
 	result := false
 
-	origin := &LinkNode[T]{}
+	origin := &LinkedNode[T]{}
 	origin.Next = std.Head
 
 	previous := origin
@@ -132,7 +132,7 @@ func (std *LinkedList[T]) Delete(idx int) bool {
 func (std *LinkedList[T]) Size() int {
 	result := 0
 
-	origin := &LinkNode[T]{}
+	origin := &LinkedNode[T]{}
 	origin.Next = std.Head
 
 	pointer := origin.Next
@@ -150,7 +150,7 @@ func (std *LinkedList[T]) Reverse() {
 		return
 	}
 
-	var origin = &LinkNode[T]{}
+	var origin = &LinkedNode[T]{}
 	origin.Next = std.Head
 
 	var leftEnd = origin

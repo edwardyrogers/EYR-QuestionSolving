@@ -29,9 +29,9 @@ func main() {
 	}
 }
 
-func mergeTwoLists[T dt.Comparable](list1 *ds.LinkNode[T], list2 *ds.LinkNode[T]) *ds.LinkNode[T] {
+func mergeTwoLists[T dt.Comparable](list1 *ds.LinkedNode[T], list2 *ds.LinkedNode[T]) *ds.LinkedNode[T] {
 
-	result := &ds.LinkNode[T]{}
+	result := &ds.LinkedNode[T]{}
 	pointer := result
 
 	for list1 != nil && list2 != nil {

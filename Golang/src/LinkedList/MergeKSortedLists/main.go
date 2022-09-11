@@ -21,7 +21,7 @@ func main() {
 	listThree := ds.LinkedList[int]{}
 	listThree.Insert(-1)
 
-	lists := []*ds.LinkNode[int]{listOne.Head, listTwo.Head, listThree.Head}
+	lists := []*ds.LinkedNode[int]{listOne.Head, listTwo.Head, listThree.Head}
 
 	iter := mergeKLists(lists)
 
@@ -32,15 +32,15 @@ func main() {
 	}
 }
 
-func mergeKLists[T dt.Comparable](lists []*ds.LinkNode[T]) *ds.LinkNode[T] {
+func mergeKLists[T dt.Comparable](lists []*ds.LinkedNode[T]) *ds.LinkedNode[T] {
 
-	result := &ds.LinkNode[T]{}
+	result := &ds.LinkedNode[T]{}
 	pointer := result
 
 	for idx := 0; idx <= len(lists)-1; idx += 2 {
 
-		var listA *ds.LinkNode[T] = lists[idx]
-		var listB *ds.LinkNode[T] = nil
+		var listA *ds.LinkedNode[T] = lists[idx]
+		var listB *ds.LinkedNode[T] = nil
 
 		if ((idx + 1) % len(lists)) != 0 {
 			listB = lists[idx+1]
@@ -53,9 +53,9 @@ func mergeKLists[T dt.Comparable](lists []*ds.LinkNode[T]) *ds.LinkNode[T] {
 	return result.Next
 }
 
-func mergeTwoLists[T dt.Comparable](list1 *ds.LinkNode[T], list2 *ds.LinkNode[T]) *ds.LinkNode[T] {
+func mergeTwoLists[T dt.Comparable](list1 *ds.LinkedNode[T], list2 *ds.LinkedNode[T]) *ds.LinkedNode[T] {
 
-	result := &ds.LinkNode[T]{}
+	result := &ds.LinkedNode[T]{}
 	pointer := result
 
 	for list1 != nil && list2 != nil {

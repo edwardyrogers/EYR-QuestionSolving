@@ -29,32 +29,37 @@ func main() {
 	}
 }
 
-func reverseBetween[T dt.Comparable](head *ds.LinkNode[T], left int, right int) *ds.LinkNode[T] {
+func reverseBetween[T dt.Comparable](head *ds.LinkedNode[T], left int, right int) *ds.LinkedNode[T] {
 	if head == nil || left == right {
 		return head
 	}
 
-	result := &ds.LinkNode[T]{}
+	result := &ds.LinkedNode[T]{}
 	result.Next = head
 
-	leftEnd := result
+	pointer := result
 
 	pos := 1
 	for pos < left {
-		leftEnd = leftEnd.Next
+		pointer = pointer.Next
 		pos++
 	}
 
-	ptToStart := leftEnd.Next
+	ptToStart := pointer.Next
 
 	//       |     |
 	// 1, 2, 3, 4, 5, 6, 7
 	for left < right {
 
+		// 234567
 		ptToCut := ptToStart.Next
+		// 1 -> 34567
 		ptToStart.Next = ptToCut.Next
-		ptToCut.Next = leftEnd.Next
-		leftEnd.Next = ptToCut
+
+		// 2 -> 1
+		ptToCut.Next = pointer.Next
+		// nil -> 2
+		pointer.Next = ptToCut
 
 		left++
 	}

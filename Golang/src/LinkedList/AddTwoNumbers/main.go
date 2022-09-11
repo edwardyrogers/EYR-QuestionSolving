@@ -29,9 +29,9 @@ func main() {
 	}
 }
 
-func addTwoNumbers[T dt.Unsigned](l1 *ds.LinkNode[T], l2 *ds.LinkNode[T]) *ds.LinkNode[T] {
+func addTwoNumbers[T dt.Unsigned](l1 *ds.LinkedNode[T], l2 *ds.LinkedNode[T]) *ds.LinkedNode[T] {
 	var carry T = 0
-	var result = &ds.LinkNode[T]{}
+	var result = &ds.LinkedNode[T]{}
 	var pointer = result
 
 	for l1 != nil || l2 != nil || carry > 0 {
@@ -48,9 +48,9 @@ func addTwoNumbers[T dt.Unsigned](l1 *ds.LinkNode[T], l2 *ds.LinkNode[T]) *ds.Li
 
 		sum := firstNum + secondNum + carry
 		num := sum % 10
-		carry = sum / 10
+		carry = carry + (sum)/10
 
-		pointer.Next = &ds.LinkNode[T]{Val: &num, Next: nil}
+		pointer.Next = &ds.LinkedNode[T]{Val: &num, Next: nil}
 		pointer = pointer.Next
 
 		if l1 != nil {

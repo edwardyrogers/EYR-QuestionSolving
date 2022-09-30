@@ -22,8 +22,6 @@ func main() {
 
 	iter := swapPairs(list.Head)
 
-	fmt.Println()
-
 	for iter != nil {
 		fmt.Println(*iter.Val)
 
@@ -33,34 +31,37 @@ func main() {
 
 func swapPairs[T dt.Comparable](head *ds.LinkedNode[T]) *ds.LinkedNode[T] {
 
-	origin := &ds.LinkedNode[T]{}
+	origin := &ds.LinkedNode[T]{Val: nil}
 	origin.Next = head
 
 	pointer := origin
 
-	pos := 0
+	pos := 1
 
-	for pointer != nil {
+	ptToConnect := pointer
 
-		// 1234567
-		ptToStart := pointer.Next
-		checkNode := ptToStart != nil && ptToStart.Next != nil
+	ptToStart := pointer.Next
 
-		if pos%2 == 0 && checkNode {
+	for ptToStart != nil && ptToStart.Next != nil {
 
-			// 234567
-			ptToCut := ptToStart.Next
-			// 1 -> 34567
-			ptToStart.Next = ptToCut.Next
+		if pos == 2 {
+			ptToConnect = ptToStart
+			ptToStart = ptToStart.Next
+			pos = 1
 
-			// 2 -> 1
-			ptToCut.Next = pointer.Next
-			// nil -> 2
-			pointer.Next = ptToCut
-
+			continue
 		}
 
-		pointer = pointer.Next
+		// 2...
+		ptToCut := ptToStart.Next
+		// 1 -> 3
+		ptToStart.Next = ptToCut.Next
+
+		// 2 -> 1
+		ptToCut.Next = ptToConnect.Next
+		// nil -> 2
+		ptToConnect.Next = ptToCut
+
 		pos++
 	}
 

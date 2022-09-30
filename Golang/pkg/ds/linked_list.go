@@ -150,18 +150,18 @@ func (std *LinkedList[T]) Reverse() {
 		return
 	}
 
-	var origin = &LinkedNode[T]{}
+	origin := &LinkedNode[T]{}
 	origin.Next = std.Head
 
-	var leftEnd = origin
+	pointer := origin
 
-	var ptToStart = leftEnd.Next
+	ptToStart := pointer.Next
 
 	for ptToStart.Next != nil {
-		var ptToCut = ptToStart.Next
+		ptToCut := ptToStart.Next
 		ptToStart.Next = ptToCut.Next
-		ptToCut.Next = leftEnd.Next
-		leftEnd.Next = ptToCut
+		ptToCut.Next = pointer.Next
+		pointer.Next = ptToCut
 	}
 
 	std.Head = origin.Next
